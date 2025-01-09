@@ -1,0 +1,88 @@
+{% load static %}
+{% block image %}
+<img src="{% static 'logo_utpl.jpg' %}" alt="" width="200">
+
+{% endblock image %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        {% block content %}
+        <div class="text-center mb-4">
+            <img src="{% static 'images.png' %}" alt="" width="200" class="img-fluid">
+            <h1 class="display-4 mt-3">Sistema de Gestión de la Biblioteca</h1>
+        </div>
+        {% endblock %}
+
+        <section>
+            <h2 class="h4 text-primary mb-3">Libros</h2>
+            <ul id="lista-libros" class="list-group">
+                {% for libro in libros %}
+                    <li class="list-group-item libro-item" 
+                        data-titulo="{{ libro.titulo }}" 
+                        data-autor="{{ libro.autor.nombre }}">
+                        <p><strong>Título:</strong> {{ libro.titulo }}</p>
+                        <p><strong>Año de publicación:</strong> {{ libro.anio_publicacion }}</p>
+                        <p><strong>Autor:</strong> {{ libro.autor.nombre }}</p>
+                        <p><strong>Categoría:</strong> {{ libro.categoria.nombre_categoria }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="mt-5">
+            <h2 class="h4 text-primary mb-3">Autores</h2>
+            <ul class="list-group">
+                {% for autor in autores %}
+                    <li class="list-group-item">
+                        <p><strong>Nombre:</strong> {{ autor.nombre }}</p>
+                        <p><strong>País de origen:</strong> {{ autor.pais_origen }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="mt-5">
+            <h2 class="h4 text-primary mb-3">Categorías</h2>
+            <ul class="list-group">
+                {% for categoria in categorias %}
+                    <li class="list-group-item">
+                        <p><strong>Nombre:</strong> {{ categoria.nombre_categoria }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p class="mb-0">Dirección: San Cayetano</p>
+        <p class="mb-0">Teléfono: 1800-0-0</p>
+    </footer>
+
+    
+    <script>
+      
+        document.addEventListener('DOMContentLoaded', function() {
+            const libroItems = document.querySelectorAll('.libro-item');
+
+            libroItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const titulo = this.dataset.titulo;
+                    const autor = this.dataset.autor;
+
+                    alert(`Título: ${titulo}\nAutor: ${autor}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
